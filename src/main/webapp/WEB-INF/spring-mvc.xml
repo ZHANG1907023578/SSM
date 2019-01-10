@@ -33,7 +33,7 @@
     <!--4) 单独处理图片、样式、js等资源 -->
 
     <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
-    <!--<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>-->
+    <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
     <!--<mvc:resources location="WEB-INF/images/" mapping="/images/**"/>-->
 
 </beans>

@@ -12,7 +12,9 @@
     <script type="text/javascript" src="${ctx}/js/permissions/js/Menu.js"></script>
     <link rel="stylesheet" type="text/css" href="${ctx}/js/permissions/css/Menu.css">
 </head>
-
+<style>
+    iframe{overflow-x:hidden;width:100%;height:100%;border:0;}
+</style>
 
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -35,7 +37,7 @@
         <%--</ul>--%>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item"><a href="javascript:;"> <img
-                    src="${image}" class="layui-nav-img"> ${username }
+                    <%--src="${image}" class="layui-nav-img"> ${username }--%>
             </a>
                 <dl class="layui-nav-child">
                     <dd>

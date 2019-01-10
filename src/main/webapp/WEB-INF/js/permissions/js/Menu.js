@@ -28,10 +28,11 @@ function selectLeftMenu() {
 								  element.tabAdd('tabs', {
 									  title:node.name//选m项卡的名称
 					                  //把这个页面嵌套进选项卡中
-					                  ,content:'<iframe scrolling="hidden" frameborder="0" src="'+rootPath+node.moduleurl+'" width="98%" height="100%"></iframe>'//支持传入html
+					                  ,content:'<iframe style="overflow-x:none;width:100%;height:100%;border:0;" src="'+rootPath+node.moduleurl+'"></iframe>'//支持传入html
 					                  //这是选项卡的id
 					                  ,id:node.id,
 					              });
+								  element.init();
 								    calculate();
 								  element.tabChange('tabs', node.id);
 								  }

@@ -131,7 +131,6 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager" />
-
     <!-- 6.开启动态代理 -->
     <aop:aspectj-autoproxy/>
 </beans>

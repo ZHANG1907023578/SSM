@@ -27,7 +27,7 @@ public class MenuCollection {
     @ResponseBody
     public List<Map<String,Object>> leftMenu(){
         List<Menu> menus = iMenuServices.queryIndexMenu();
-        System.out.println(menus);
+//        System.out.println(menus);
         List<Map<String, Object>> children = children(menus, "0");
         return children;
     }

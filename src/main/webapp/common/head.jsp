@@ -9,8 +9,9 @@
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <input type="hidden" id="absolutePath" value="${pageContext.request.contextPath }/">
-<base href="${pageContext.request.contextPath }/">
-<script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>
-<script type="text/javascript" src="${ctx}/js/layui/layui.js"></script>
-<link rel="stylesheet" type="text/css" href="${ctx}/js/layui/css/layui.css" media="all">
+<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" media="all">
+<link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/layui/layui.js"></script>
+<script type="text/javascript" src="js/util/date.js"></script>
 
