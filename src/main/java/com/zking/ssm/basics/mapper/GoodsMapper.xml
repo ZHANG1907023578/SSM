@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.basics.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.basics.model.Goods" >
+    <constructor >
+      <arg column="gid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="origin" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="producer" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="unit" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="inprice" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="outprice" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="gtid" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="goods_list_id">
+    gid,gname,origin,producer,unit,inprice,outprice,gtid
+  </sql>
+  <insert id="insert" parameterType="com.zking.ssm.basics.model.Goods" >
+    insert into goods (gid, gname, origin, 
+      producer, unit, inprice, 
+      outprice, gtid)
+    values (#{gid,jdbcType=VARCHAR}, #{gname,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
+      #{producer,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{inprice,jdbcType=REAL}, 
+      #{outprice,jdbcType=REAL}, #{gtid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.basics.model.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="origin != null" >
+        origin,
+      </if>
+      <if test="producer != null" >
+        producer,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="inprice != null" >
+        inprice,
+      </if>
+      <if test="outprice != null" >
+        outprice,
+      </if>
+      <if test="gtid != null" >
+        gtid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="producer != null" >
+        #{producer,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="inprice != null" >
+        #{inprice,jdbcType=REAL},
+      </if>
+      <if test="outprice != null" >
+        #{outprice,jdbcType=REAL},
+      </if>
+      <if test="gtid != null" >
+        #{gtid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="queryGodsSelect" resultType="com.zking.ssm.basics.model.Goods">
+      select <include refid="goods_list_id"/>
+      from goods where 1=1
+    </select>
+</mapper>

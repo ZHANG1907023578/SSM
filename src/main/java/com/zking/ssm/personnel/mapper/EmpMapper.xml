@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.personnel.mapper.EmpMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.personnel.model.Emp" >
+    <constructor >
+      <arg column="eid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pwd" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ename" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tele" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="depid" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="emp_list_id">
+    eid,username,pwd,ename,gender,email,tele,address,birthday,depid
+  </sql>
+  <insert id="insert" parameterType="com.zking.ssm.personnel.model.Emp" >
+    <selectKey keyProperty="eid" resultType="java.lang.String"
+               order="BEFORE">
+      select replace(uuid(),'-','') from dual
+    </selectKey>
+    insert into emp (eid, username,
+      ename, gender, email, 
+      tele, address, birthday, 
+      depid)
+    values (#{eid}, #{username},
+      #{ename}, #{gender}, #{email},
+      #{tele}, #{address}, #{birthday},
+      #{depid})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.personnel.model.Emp" >
+    insert into emp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="ename != null" >
+        ename,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="tele != null" >
+        tele,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="depid != null" >
+        depid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eid != null" >
+        #{eid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="ename != null" >
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null" >
+        #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="depid != null" >
+        #{depid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.zking.ssm.personnel.model.Emp">
+    update emp
+    <set>
+    <if test="null!=username and ''!=username">
+      username=#{username},
+    </if>
+    <!--<if test="null!=ename and ''!=ename">-->
+      ename=#{ename},
+<!--&#45;&#45;     </if>-->
+    <!--<if test="null!=gender and ''!=gender">-->
+      gender=#{gender},
+    <!--</if>-->
+    <!--<if test="null!=email and ''!=email">-->
+      email=#{email},
+    <!--</if>-->
+    <!--<if test="null!=tele and ''!=tele">-->
+      tele=#{tele},
+    <!--</if>-->
+    <!--<if test="null!=address and ''!=address">-->
+      address=#{address},
+    <!--</if>-->
+    <if test="null!=depid and ''!=depid">
+      depid=#{depid},
+    </if>
+    <!--<if test="null!=birthday and ''!=birthday">-->
+      birthday=#{birthday}
+    <!--</if>-->
+  </set>
+    where eid=#{eid}
+  </update>
+  <update id="UpdateMm" parameterType="com.zking.ssm.personnel.model.Emp">
+    update emp set pwd=#{pwd} where eid=#{eid}
+  </update>
+  <delete id="delete" parameterType="com.zking.ssm.personnel.model.Emp">
+    delete from emp where eid=#{eid}
+  </delete>
+    <select id="queryEmpPager" resultType="java.util.Map"
+            parameterType="com.zking.ssm.personnel.model.Emp">
+      select eid,username,pwd,ename,gender,email,tele,address,birthday,a.depid,b.dname
+      from emp a inner join dep b where a.depid=b.depid
+      <if test="null!=eid and ''!=eid">
+         and eid=#{eid}
+      </if>
+      <if test="null!=ename and ''!=ename">
+         and ename like concat(concat('%',#{ename}),'%')
+      </if>
+      <if test="null!=gender and ''!=gender">
+         and gender=#{gender}
+      </if>
+      <if test="null!=tele and ''!=tele">
+         and tele=#{tele}
+      </if>
+      <if test="null!=depid and ''!=depid">
+         and depid=#{depid}
+      </if>
+    </select>
+  <select id="querySelect" resultType="com.zking.ssm.personnel.model.Emp">
+    select <include refid="emp_list_id"/> from emp where 1=1
+  </select>
+    <select id="loginUser" resultType="com.zking.ssm.personnel.model.Emp"
+            parameterType="com.zking.ssm.personnel.model.Emp">
+      select <include refid="emp_list_id"/> from emp where 1=1 and  username=#{username} and pwd=#{pwd};
+
+    </select>
+</mapper>

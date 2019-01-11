@@ -1,12 +1,13 @@
-package com.zking.ssm.personnel.services;
+package com.zking.ssm.personnel.mapper;
 
 import com.zking.ssm.personnel.model.Emp;
-import com.zking.ssm.util.PageBean;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
-public interface IEmpServices {
+@Repository
+public interface EmpMapper {
     int insert(Emp record);
 
     int insertSelective(Emp record);
@@ -15,11 +16,12 @@ public interface IEmpServices {
 
     int delete(Emp emp);
 
-    List<Map<String,Object>> queryEmpPager(Emp emp, PageBean pageBean);
+    List<Map<String,Object>> queryEmpPager(Emp emp);
 
     List<Emp> querySelect();
 
     Emp loginUser(Emp emp);
 
     int UpdateMm(Emp emp);
+
 }

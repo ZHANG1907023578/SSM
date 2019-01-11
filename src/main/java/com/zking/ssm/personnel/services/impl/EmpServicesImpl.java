@@ -39,4 +39,19 @@ public class EmpServicesImpl implements IEmpServices {
     public List<Map<String, Object>> queryEmpPager(Emp emp, PageBean pageBean) {
         return empMapper.queryEmpPager(emp);
     }
+
+    @Override
+    public List<Emp> querySelect() {
+        return empMapper.querySelect();
+    }
+
+    @Override
+    public Emp loginUser(Emp emp) {
+        return empMapper.loginUser(emp);
+    }
+
+    @Override
+    public int UpdateMm(Emp emp) {
+        return empMapper.UpdateMm(emp);
+    }
 }

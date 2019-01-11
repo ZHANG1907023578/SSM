@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.repertory.mapper.StortdetallMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.repertory.model.Stortdetall" >
+    <constructor >
+      <arg column="sdid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="stid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.ssm.repertory.model.Stortdetall" >
+    <selectKey keyProperty="stid" resultType="java.lang.String"
+               order="BEFORE">
+      select replace(uuid(),'-','') from dual
+    </selectKey>
+    insert into stortdetall ( stid, gid,
+      num)
+    values ( #{stid,jdbcType=VARCHAR}, #{gid,jdbcType=VARCHAR},
+      #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.repertory.model.Stortdetall" >
+    insert into stortdetall
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sdid != null" >
+        sdid,
+      </if>
+      <if test="stid != null" >
+        stid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sdid != null" >
+        #{sdid,jdbcType=VARCHAR},
+      </if>
+      <if test="stid != null" >
+        #{stid,jdbcType=VARCHAR},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryStortDetallPager" resultType="java.util.Map" parameterType="com.zking.ssm.repertory.model.Stortdetall">
+SELECT sdid,a.stid,a.gid,num,b.name,c.gname FROM stortdetall a,store b,goods c WHERE a.stid=b.stid AND a.gid=c.gid
+  <if test="null!=stid and ''!=stid">
+    and a.stid=#{stid}
+  </if>
+    <if test="null!=gid and ''!=gid">
+      and a.gid=#{gid}
+    </if>
+  </select>
+  <select id="queryCkSp" resultType="string">
+    select gid from stortdetall where 1=1
+  </select>
+
+</mapper>

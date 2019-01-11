@@ -29,11 +29,11 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-    <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
+    <mvc:view-controller path="/" view-name="login"></mvc:view-controller>
     <!--4) 单独处理图片、样式、js等资源 -->
 
     <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
     <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
-    <!--<mvc:resources location="WEB-INF/images/" mapping="/images/**"/>-->
+    <mvc:resources location="WEB-INF/images/" mapping="/images/**"/>
 
 </beans>

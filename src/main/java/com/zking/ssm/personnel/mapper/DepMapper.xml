@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zking.ssm.personnel.mapper.DepMapper">
+  <resultMap id="BaseResultMap" type="com.zking.ssm.personnel.model.Dep">
+    <constructor>
+      <arg column="depid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="dname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tel" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="dep_list_id">
+    depid,dname,tel
+  </sql>
+  <insert id="insert" parameterType="com.zking.ssm.personnel.model.Dep">
+    <selectKey keyProperty="depid" resultType="java.lang.String"
+               order="BEFORE">
+      select replace(uuid(),'-','') from dual
+    </selectKey>
+    insert into dep (depid, dname, tel
+      )
+    values (#{depid,jdbcType=VARCHAR },#{dname,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.personnel.model.Dep">
+    insert into dep
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="depid != null">
+        depid,
+      </if>
+      <if test="dname != null">
+        dname,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="depid != null">
+        #{depid,jdbcType=VARCHAR},
+      </if>
+      <if test="dname != null">
+        #{dname,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.zking.ssm.personnel.model.Dep">
+    update dep set dname=#{dname},tel=#{tel} where depid=#{depid}
+  </update>
+  <delete id="delete" parameterType="com.zking.ssm.personnel.model.Dep">
+    delete from dep where depid=#{depid}
+  </delete>
+  <select id="queryDepPager" resultType="com.zking.ssm.personnel.model.Dep"
+          parameterType="com.zking.ssm.personnel.model.Dep">
+    select <include refid="dep_list_id"/> from dep where 1=1
+    <if test="null!=depid and ''!=depid">
+    and depid=#{depid}
+    </if>
+    <if test="null!=dname and ''!=dname">
+      and dname like concat(concat("%",#{dname}),"%")
+    </if>
+    <if test="null!=tel and ''!=tel">
+      and tel=#{tel}
+    </if>
+  </select>
+    <select id="bmSelect" resultType="com.zking.ssm.personnel.model.Dep">
+      select <include refid="dep_list_id"/>
+      from dep where 1=1
+    </select>
+</mapper>

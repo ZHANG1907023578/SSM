@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.repertory.mapper.StoreMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.repertory.model.Store" >
+    <constructor >
+      <arg column="stid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="eid" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="store_list_id">
+    stid,name,eid
+  </sql>
+  <insert id="insert" parameterType="com.zking.ssm.repertory.model.Store" >
+    insert into store (stid, name, eid
+      )
+    values (#{stid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{eid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.repertory.model.Store" >
+    insert into store
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stid != null" >
+        stid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="eid != null" >
+        eid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stid != null" >
+        #{stid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryStorePager" resultType="java.util.Map"
+          parameterType="com.zking.ssm.repertory.model.Store">
+  select stid,name ,a.eid,b.ename from store a inner join emp b
+  on a.eid=b.eid where 1=1
+
+
+  </select>
+  <select id="queryCk" resultType="com.zking.ssm.repertory.model.Store">
+    select stid,name from store where 1=1
+  </select>
+</mapper>

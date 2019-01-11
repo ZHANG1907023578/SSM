@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.repertory.mapper.StoreoperMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.repertory.model.Storeoper" >
+    <constructor >
+      <arg column="soid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="eid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="opertime"  />
+      <arg column="sdid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.zking.ssm.repertory.model.Storeoper" >
+    insert into storeoper (soid, eid, opertime, 
+      sdid, gid, num, type
+      )
+    values (#{soid,jdbcType=VARCHAR}, #{eid,jdbcType=VARCHAR}, #{opertime},
+      #{sdid,jdbcType=VARCHAR}, #{gid,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{type,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.repertory.model.Storeoper" >
+    insert into storeoper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="soid != null" >
+        soid,
+      </if>
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="opertime != null" >
+        opertime,
+      </if>
+      <if test="sdid != null" >
+        sdid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="soid != null" >
+        #{soid,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=VARCHAR},
+      </if>
+      <if test="opertime != null" >
+        #{opertime,jdbcType=DATE},
+      </if>
+      <if test="sdid != null" >
+        #{sdid,jdbcType=VARCHAR},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="queryKcmessPager" resultType="java.util.Map" parameterType="com.zking.ssm.repertory.model.Storeoper">
+      select  ename,soid,a.eid,opertime,a.sdid,a.gid,a.num,type,f.dictvalue,b.stid,b.num,d.name ,c.gname from storeoper a ,stortdetall b,goods c,store d,emp e,basdict f
+      where a.sdid=b.sdid and a.gid=c.gid and b.stid=d.stid and a.eid=e.eid and type=f.dictid
+   <if test="null!=eid and ''!=eid">
+     and a.eid=#{eid}
+   </if>
+      <if test="null!=sdid and ''!=sdid">
+        and a.sdid=#{sdid}
+      </if>
+      <if test="null!=gid and ''!=gid">
+        and a.gid=#{gid}
+      </if>
+      <if test="null!=type and ''!=type">
+        and a.type=#{type}
+      </if>
+      <if test="null!=timebetween and ''!=timebetween">
+          and opertime between SUBSTRING_INDEX(#{timebetween},'-', 3) and SUBSTRING_INDEX(#{timebetween},'-', -3)
+      </if>
+    </select>
+
+</mapper>

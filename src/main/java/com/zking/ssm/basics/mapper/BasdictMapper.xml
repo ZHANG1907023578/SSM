@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zking.ssm.basics.mapper.BasdictMapper">
+  <resultMap id="BaseResultMap" type="com.zking.ssm.basics.model.Basdict">
+    <constructor>
+      <idArg column="dictid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="dicttype" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="dictvalue" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    dictid, dicttype, dictvalue
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from basdict
+    where dictid = #{dictid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from basdict
+    where dictid = #{dictid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.basics.model.Basdict">
+    insert into basdict (dictid, dicttype, dictvalue
+      )
+    values (#{dictid,jdbcType=VARCHAR}, #{dicttype,jdbcType=VARCHAR}, #{dictvalue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.basics.model.Basdict">
+    insert into basdict
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dictid != null">
+        dictid,
+      </if>
+      <if test="dicttype != null">
+        dicttype,
+      </if>
+      <if test="dictvalue != null">
+        dictvalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dictid != null">
+        #{dictid,jdbcType=VARCHAR},
+      </if>
+      <if test="dicttype != null">
+        #{dicttype,jdbcType=VARCHAR},
+      </if>
+      <if test="dictvalue != null">
+        #{dictvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.basics.model.Basdict">
+    update basdict
+    <set>
+      <if test="dicttype != null">
+        dicttype = #{dicttype,jdbcType=VARCHAR},
+      </if>
+      <if test="dictvalue != null">
+        dictvalue = #{dictvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dictid = #{dictid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.basics.model.Basdict">
+    update basdict
+    set dicttype = #{dicttype,jdbcType=VARCHAR},
+      dictvalue = #{dictvalue,jdbcType=VARCHAR}
+    where dictid = #{dictid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="querySelect" parameterType="com.zking.ssm.basics.model.Basdict" resultType="com.zking.ssm.basics.model.Basdict">
+    select <include refid="Base_Column_List" /> from basdict where 1=1
+    and dicttype=#{dicttype}
+  </select>
+
+</mapper>

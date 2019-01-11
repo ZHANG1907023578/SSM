@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,13 @@ public class EmpCollection {
         return map;
     }
 
+    @RequestMapping("/queryEmpSelect")
+    @ResponseBody
+    public List<Emp> queryEmpSelect(){
+        List<Emp> emps = iEmpServices.querySelect();
+            return emps;
+    }
+
 
     /**
      * 员工信息
@@ -126,6 +134,31 @@ public class EmpCollection {
         map.put("count",pageBeans.getTotal());
         return map;
     }
+
+
+    @RequestMapping("/empRoleSet.sjsp")
+    public String updataMm(){
+        return "personnel/empRoleSet";
+    }
+
+
+    @RequestMapping("/updateMm")
+    @ResponseBody
+    public Map<String,Object> updateMm(Emp emp, HttpSession session){
+        Map<String,Object> map=new HashMap<>();
+        Emp emp1=(Emp)session.getAttribute("User");
+        emp.setEid(emp1.getEid());
+        int i = iEmpServices.UpdateMm(emp);
+        if(i>=0){
+            map.put("success",true);
+            map.put("message","修改成功");
+        }else{
+            map.put("success",false);
+            map.put("message","系统繁忙");
+        }
+        return map;
+    }
+
 
 
 }
